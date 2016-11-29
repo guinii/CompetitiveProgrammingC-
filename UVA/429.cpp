@@ -22,6 +22,10 @@
 
 using namespace std;
 
+
+int N = 200;                  // numero de nodos
+vector<int> A[200];   // listas de adyacencia
+
 bool calculate(string s1, string s2){
 	if(s1.size() != s2.size()){
 		return false;
@@ -40,8 +44,6 @@ bool calculate(string s1, string s2){
 	}
 }
 
-int N;                  // numero de nodos
-vector<int> A[10001];   // listas de adyacencia
 
 int BFS(int s, int t) { // distancia entre s y t
   if (s == t) return 0;
@@ -66,25 +68,19 @@ int BFS(int s, int t) { // distancia entre s y t
   return -1;
 }
 
-/*int main() {
-  N = 6;      // solucion 0-1-3-5, distancia 3
-  A[0].PB(1); // arista (0, 1)
-  A[0].PB(2); // arista (0, 2)
-  A[1].PB(2); // arista (1, 2)
-  A[1].PB(3); // arista (1, 3)
-  A[2].PB(4); // arista (2, 4)
-  A[3].PB(5); // arista (3, 5)
-  A[4].PB(3); // arista (4, 3)
-  cout << BFS(0, 5) << endl;
-}*/
 
-
-  int main(){
+int main(){
 	int Q;
 	map<string,int> mymap;
-	while(cin >> Q && Q != NULL ){
+	cin >> Q;
+	for(int y = 0 ; y < Q ; ++y){ 
 		string inp; 
+		for(int i = 0 ; i < N ; ++i){
+			A[i].clear();
+		} 
 		vector<pair<string,int> > temp;
+		temp.clear();
+		mymap.clear();
 		int cont = 1;
 		while(cin >> inp && inp != "*"){
 			mymap[inp] = cont;
@@ -93,19 +89,24 @@ int BFS(int s, int t) { // distancia entre s y t
 			cont++;
 		}
 		for(vector<pair<string,int> >::iterator it = temp.begin() ; it != temp.end() ; ++it){
-			for(vector<pair<string,int> >::iterator it2 = it ; it2 != temp.end() ; ++it2){
+			for(vector<pair<string,int> >::iterator it2 = temp.begin() ; it2 != temp.end() ; ++it2){
 				if(calculate(it->first,it2->first)){
-					//cout << "una dif entre " << it->first << " y " << it2->first << endl;
 					A[it->second].PB(it2->second);
 				} 
 			}
 		}
-		string in,out;
-		cin >> in >> out;
-		int res ;
-		cout << mymap[in] << "  "  << mymap[out] <<endl;
-		res = BFS(mymap[in],mymap[out]);
-		cout << " a" << res << endl;
+		cin.ignore();
+		string line;
+		getline(cin,line);
+		while(line.size() != 0){
+			int p = line.find(" ");
+			string in = line.substr(0,p);
+			string out = line.substr(p+1);
+			int final = BFS(mymap[in],mymap[out]);
+			cout << in << " " << out << " " << final <<endl;
+			getline(cin,line);
+		}
+		if(y!=Q-1)cout <<endl;
 	}
 	
 }
