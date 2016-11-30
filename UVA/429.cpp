@@ -23,13 +23,11 @@
 using namespace std;
 
 
-int N = 200;                  // numero de nodos
-vector<int> A[200];   // listas de adyacencia
+int N = 1000;                  // numero de nodos
+vector<int> A[10001];   // listas de adyacencia
 
 bool calculate(string s1, string s2){
-	if(s1.size() != s2.size()){
-		return false;
-	}else{
+	if(s1.size() == s2.size()){
 		int cont = 0;
 		for(int i = 0 ; i < s1.size() ; ++i){
 			if(s1[i] != s2[i]){
@@ -71,11 +69,11 @@ int BFS(int s, int t) { // distancia entre s y t
 
 int main(){
 	int Q;
-	map<string,int> mymap;
 	cin >> Q;
 	for(int y = 0 ; y < Q ; ++y){ 
+		map<string,int> mymap;
 		string inp; 
-		for(int i = 0 ; i < N ; ++i){
+		for(int i = 0 ; i < 10001 ; ++i){
 			A[i].clear();
 		} 
 		vector<pair<string,int> > temp;
@@ -95,6 +93,7 @@ int main(){
 				} 
 			}
 		}
+		//apaño molt feo per agafar la part del final!
 		cin.ignore();
 		string line;
 		getline(cin,line);
@@ -103,6 +102,7 @@ int main(){
 			string in = line.substr(0,p);
 			string out = line.substr(p+1);
 			int final = BFS(mymap[in],mymap[out]);
+			if(final == -1 )final = 0;
 			cout << in << " " << out << " " << final <<endl;
 			getline(cin,line);
 		}
