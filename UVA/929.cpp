@@ -28,7 +28,7 @@ typedef pair<V,int> P;  // par de (coste,nodo)
 typedef set<P> S;       // conjunto de pares
 
 int N;                  // numero de nodos
-vector<P> A[10001];     // listas adyacencia (coste,nodo)
+vector<P> A[(1000*1000)+5];     // listas adyacencia (coste,nodo)
 
 // int prec[201]; // predecesores (nodes from s to t)
 // another way to obtain a path (above all, if there is
@@ -77,27 +77,27 @@ int main(){
 				cin >> temp[i][j];
 			}
 		}
-		for(int i = 0 ; i < lin*col ; ++i){
+		for(int i = 0 ; i <= lin*col ; ++i){
 			A[i].clear();
 		}
 		for(int i =0  ; i < lin ; ++i){
 			for(int j = 0 ; j < col ;++j){
-				if(i != lin-1){
-					if(j != col-1){
-						A[j+(i*col)].PB(MP(temp[i][j+1],(j+(i*col))+1));
-					}
-					A[j+(i*col)].PB(MP(temp[i+1][j],(j+((i+1)*col))));
-				}else{
-					if(j != col-1){
-						A[j+(i*col)].PB(MP(temp[i][j+1],(j+(i*col))+1));
-					}
+				
+				if(j != col-1){
+					A[j+(i*col)].PB(MP(temp[i][j+1],(j+(i*col))+1));
 				}
+				if(i != lin -1)A[j+(i*col)].PB(MP(temp[i+1][j],(j+((i+1)*col))));
+				if(j != 0){
+					A[j+(i*col)].PB(MP(temp[i][j-1],(j+(i*col))-1));
+				}
+				if(i != 0)A[j+(i*col)].PB(MP(temp[i-1][j],(j+((i-1)*col))));
+					
 			}
 		}
 		if(lin == 1 && col == 1){
 			cout << temp[0][0] << endl;
 		}else{
-			cout << dijkstra(0,(lin*col)-1) << endl;
+			cout << dijkstra(0,(lin*col)-1) + temp[0][0] << endl;
 		}
 		/*for(int i = 0 ; i < (lin*col)  ; ++i){
 			for(vector<P>::iterator  it = A[i].begin() ; it != A[i].end() ; ++it){
