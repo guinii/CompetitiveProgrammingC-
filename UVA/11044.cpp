@@ -31,12 +31,6 @@ int main(){
 		int contfil = 0;
 		int contcol = 0;
 		cin >> fil >> col;
-		/*int totalCasillas = (fil * col) - ((fil+col)+((fil-2)+(col-2)));
-		cout << totalCasillas<<endl;
-		while(totalCasillas % 9 != 0){
-			totalCasillas--;
-			dif++;
-		}*/
 		fil -= 2;
 		col -= 2;
 		if(fil%3 !=0)contfil++;
@@ -45,12 +39,10 @@ int main(){
 			if(fil%3 == 0)contfil++;
 			fil--;
 		}
-		//total++;
 		while(col >= 3){
 			if(col%3 == 0)contcol++;
 			col--;
 		}
-		//int res = (totalCasillas/9) + (int)(dif/9);
 		cout << contcol*contfil << endl;
 		N--;
 	}
